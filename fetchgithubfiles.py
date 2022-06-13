@@ -9,6 +9,7 @@ import argparse
 ########## GLOBAL VARIABLES
 
 language = ""
+fileExtension = ""
 apiToken = ""
 maxPages = 100
 directory = "./fetchedfiles"
@@ -20,6 +21,7 @@ directory = "./fetchedfiles"
 parser = argparse.ArgumentParser()
 
 parser.add_argument("Language", help = "Set the programming language you want to search for")
+parser.add_argument("File extension", help = "Set the extension (without .) you want to search for")
 parser.add_argument("ApiToken", help = "Set your GitHub API token")
 parser.add_argument("-mp", "--MaxPages", help = "Set max number of repos pages to be fetched (100 results (repos) per page)")
 parser.add_argument("-d", "--Directory", help = "Set the directory where downloaded files will be stored")
@@ -60,7 +62,7 @@ def fetchRepos(page, headers):
     return JSONresponse["items"]
 
 def fetchRepoFiles(repoFullName, headers):
-    request = requests.get("https://api.github.com/search/code?q=extension:rs+repo:" + str(repoFullName), headers=headers)
+    request = requests.get("https://api.github.com/search/code?q=extension:" + str(fileExtension) + "+repo:" + str(repoFullName), headers=headers)
     JSONresponse = request.json()
 
     if not ("items" in JSONresponse):
