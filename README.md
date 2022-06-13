@@ -1,4 +1,4 @@
-# GitHub file fetcher by language
+# GitHub file scraper by language
 
 This Python command line tool follows a filter based on a programming language and its relative file extension to fetch and download files from a pool of GitHub repositories found by GitHub API (virtually every existing public and not-a-fork GitHub repository)
 
