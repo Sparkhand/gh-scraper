@@ -21,7 +21,7 @@ directory = "./fetchedfiles"
 parser = argparse.ArgumentParser()
 
 parser.add_argument("Language", help = "Set the programming language you want to search for")
-parser.add_argument("File extension", help = "Set the extension (without .) you want to search for")
+parser.add_argument("FileExtension", help = "Set the extension (without .) you want to search for")
 parser.add_argument("ApiToken", help = "Set your GitHub API token")
 parser.add_argument("-mp", "--MaxPages", help = "Set max number of repos pages to be fetched (100 results (repos) per page)")
 parser.add_argument("-d", "--Directory", help = "Set the directory where downloaded files will be stored")
@@ -36,6 +36,9 @@ if args.MaxPages != None:
 
 if args.Language != None:
     language = (args.Language).lower()
+
+if args.FileExtension != None:
+    fileExtension = (args.FileExtension).lower()
 
 if args.Directory != None:
     directory = args.Directory
