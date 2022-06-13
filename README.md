@@ -1,6 +1,6 @@
 # GitHub file fetcher by language
 
-This simple Python script serves as a tool to download files of a specific programming language from every existing GitHub repository (public and not-a-fork repos)
+This Python command line tool follows a filter based on a programming language and its relative file extension to fetch and download files from a pool of GitHub repositories found by GitHub API (virtually every existing public and not-a-fork GitHub repository)
 
 ## Usage
 
