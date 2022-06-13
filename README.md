@@ -5,7 +5,7 @@ This simple Python script serves as a tool to download files of a specific progr
 ## Usage
 
 ```bash
-python3 language api-key [OPTIONS]...
+python3 fetchgithubfiles.py language api-key [OPTIONS]...
 ```
 
 ### Positional arguments
