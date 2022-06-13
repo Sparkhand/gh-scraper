@@ -5,12 +5,13 @@ This simple Python script serves as a tool to download files of a specific progr
 ## Usage
 
 ```bash
-python3 fetchgithubfiles.py language api-key [OPTIONS]...
+python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 ```
 
 ### Positional arguments
 
 - `language` is the programming language to search for
+- `file-extension` is the file extension (without .) of the chosen programming language
 - `api-key` is a GitHub Personal Access Token that you can [generate here](https://github.com/settings/tokens)
 
 ### Options
@@ -18,3 +19,9 @@ python3 fetchgithubfiles.py language api-key [OPTIONS]...
 - `-mp maxpages`, `--MaxPages=maxpages` is the maximum number of pages you want to fetch (each page contains 100 fetched repositories). Set as 100 by default
 
 - `-d dir`, `--Directory=dir` is the directory where fetched files will be saved. Set as `./fetchedfiles` by default
+
+## Example
+
+```bash
+python3 fetchgithubfiles.py rust rs 123123123 -mp 20
+```
