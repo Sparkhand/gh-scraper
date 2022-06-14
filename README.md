@@ -25,3 +25,7 @@ python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 ```bash
 python3 fetchgithubfiles.py rust rs 123123123 -mp 20
 ```
+# To-Do
+
+- [ ] Add `topic` filter as option
+- [ ] Add `keyword` filter as option
