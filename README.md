@@ -20,9 +20,9 @@ python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 
 - `-d dir`, `--Directory=dir` is the directory where fetched files will be saved. Set as `./fetchedfiles` by default
 
-- `-t topic`, `--Topic=topic` is the topic for which repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied
+- `-t topic`, `--Topic=topic` is the single topic for which repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied
 
-- `-k keywords`, `--Keywords=keywords` are blank separated keywords for which repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied 
+- `-k keywords`, `--Keywords=keywords` are one or more blank separated keywords for which repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied 
 
 ## Example
 
