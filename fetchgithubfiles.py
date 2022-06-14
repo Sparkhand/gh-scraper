@@ -80,14 +80,15 @@ def printJSONLog(log):
 
 
 def fetchRepos(page, headers):
-    queryString = "https://api.github.com/search/repositories?q=language:" + \
-        str(language)
+    queryString = "https://api.github.com/search/repositories?q="
 
     if keywords != None:
         queryString = queryString + keywords
 
     if topic != None:
         queryString = queryString + "+topic:" + str(topic)
+
+    queryString = queryString + "+language:" + str(language)
 
     queryString = queryString + "&order=desc&page=" + \
         str(page) + "&per_page=100"
