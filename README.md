@@ -20,6 +20,8 @@ python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 
 - `-d dir`, `--Directory=dir` is the directory where fetched files will be saved. Set as `./fetchedfiles` by default
 
+- `-t topic`, `--Topic=topic` is the topic repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applieds
+
 ## Example
 
 ```bash
