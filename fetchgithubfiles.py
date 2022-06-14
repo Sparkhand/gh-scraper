@@ -1,3 +1,4 @@
+from ast import keyword
 from httplib2 import Authentication
 import requests
 import sys
@@ -14,6 +15,7 @@ apiToken = ""
 maxPages = 100
 directory = "./fetchedfiles"
 topic = None
+keywords = None
 
 #####################################################################
 
@@ -34,6 +36,8 @@ parser.add_argument("-mp", "--MaxPages",
 parser.add_argument("-d", "--Directory",
                     help="Set the directory where downloaded files will be stored")
 parser.add_argument("-t", "--Topic", help="Filter repositories by topic")
+parser.add_argument("-k", "--Keywords", nargs='+',
+                    help="Filter repositories by keywords")
 
 args = parser.parse_args()
 
@@ -55,9 +59,18 @@ if args.Directory != None:
 if args.Topic != None:
     topic = (args.Topic).lower()
 
+if args.Keywords != None:
+    keywords = args.Keywords
+    keywords = '+'.join(keywords)
+
 #####################################################################
 
 # FUNCTIONS
+
+def checkAPIRateExceeded(JSONresponse):
+    if "message" in JSONresponse:
+        return "API rate limit exceeded" in JSONresponse["message"]
+    return False
 
 
 def printJSONLog(log):
@@ -70,7 +83,10 @@ def fetchRepos(page, headers):
     queryString = "https://api.github.com/search/repositories?q=language:" + \
         str(language)
 
-    if args.Topic != None:
+    if keywords != None:
+        queryString = queryString + keywords
+
+    if topic != None:
         queryString = queryString + "+topic:" + str(topic)
 
     queryString = queryString + "&order=desc&page=" + \
@@ -80,7 +96,9 @@ def fetchRepos(page, headers):
     JSONresponse = response.json()
 
     if not ("items" in JSONresponse):
-        print("ERROR: NO REPOS FETCHED, CHECK JSON LOG")
+        if checkAPIRateExceeded(JSONresponse):
+            print("API Rate Exceeded")
+            sys.exit()
         printJSONLog(JSONresponse)
         return None
 
@@ -95,7 +113,9 @@ def fetchRepoFiles(repoFullName, headers):
     JSONresponse = request.json()
 
     if not ("items" in JSONresponse):
-        print("ERROR: NO FILES FETCHED, CHECK JSON LOG")
+        if checkAPIRateExceeded(JSONresponse):
+            print("API Rate Exceeded")
+            sys.exit()
         printJSONLog(JSONresponse)
         return None
 
@@ -110,7 +130,9 @@ def fetchSingleFile(repoFullName, fileName, filePath, headers):
     JSONresponse = request.json()
 
     if not ("content" in JSONresponse):
-        print("ERROR: NO FILE CONTENT FETCHED, CHECK JSON LOG")
+        if checkAPIRateExceeded(JSONresponse):
+            print("API Rate Exceeded")
+            sys.exit()
         printJSONLog(JSONresponse)
         return None
 
@@ -149,7 +171,7 @@ while True and page <= maxPages:
     fetchedRepos = fetchRepos(page, headers)
 
     if fetchedRepos == None:
-        sys.exit()
+        break
 
     for repo in fetchedRepos:   # For each repo, fetch files in that repo
 
@@ -162,7 +184,7 @@ while True and page <= maxPages:
         fetchedFilesList = fetchRepoFiles(repoFullName, headers)
 
         if fetchedFilesList == None:
-            sys.exit()
+            break
 
         for file in fetchedFilesList:   # Download each file in fetchedFiles
 
@@ -173,7 +195,7 @@ while True and page <= maxPages:
                 repoFullName, fileName, filePath, headers)
 
             if fetchedFile == None:
-                sys.exit()
+                break
 
             fileContent = decodeFileContent(fetchedFile)
 

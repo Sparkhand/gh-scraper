@@ -22,6 +22,8 @@ python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 
 - `-t topic`, `--Topic=topic` is the topic repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied
 
+- `-k keywords`, `--Keywords=keywords` are blank separated keywords repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied 
+
 ## Example
 
 ```bash
