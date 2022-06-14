@@ -11,7 +11,7 @@ python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 ### Positional arguments
 
 - `language` is the programming language to search for
-- `file-extension` is the file extension (without .) of the chosen programming language
+- `file-extension` is the file extension (without `.`) of the chosen programming language
 - `api-key` is a GitHub Personal Access Token that you can [generate here](https://github.com/settings/tokens)
 
 ### Options
