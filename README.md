@@ -16,7 +16,7 @@ python3 fetchgithubfiles.py language file-extension api-key [OPTIONS]...
 
 ### Options
 
-- `-mp maxpages`, `--MaxPages=maxpages` is the maximum number of pages you want to fetch (each page contains 100 fetched repositories). Set as 100 by default
+- `-mr maxrepos`, `--MaxRepos=maxrepos` is the maximum number of repos you want to fetch. Set as 100 by default
 
 - `-d dir`, `--Directory=dir` is the directory where fetched files will be saved. Set as `./fetchedfiles` by default
 

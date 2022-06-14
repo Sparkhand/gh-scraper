@@ -12,7 +12,7 @@ import argparse
 language = ""
 fileExtension = ""
 apiToken = ""
-maxPages = 100
+maxRepos = 100
 directory = "./fetchedfiles"
 topic = None
 keywords = None
@@ -31,8 +31,8 @@ parser.add_argument(
 parser.add_argument("ApiToken", help="Set your GitHub API token")
 
 # Options
-parser.add_argument("-mp", "--MaxPages",
-                    help="Set max number of repos pages to be fetched (100 results (repos) per page)")
+parser.add_argument("-mr", "--MaxRepos",
+                    help="Set max number of repos pages to be fetched")
 parser.add_argument("-d", "--Directory",
                     help="Set the directory where downloaded files will be stored")
 parser.add_argument("-t", "--Topic", help="Filter repositories by topic")
@@ -44,8 +44,8 @@ args = parser.parse_args()
 if args.ApiToken != None:
     apiToken = args.ApiToken
 
-if args.MaxPages != None:
-    maxPages = int(args.MaxPages)
+if args.MaxRepos != None:
+    maxRepos = abs(int(args.MaxRepos))
 
 if args.Language != None:
     language = (args.Language).lower()
@@ -79,7 +79,7 @@ def printJSONLog(log):
         o.close()
 
 
-def fetchRepos(page, headers):
+def fetchRepos(page, reposPerPage, headers):
     queryString = "https://api.github.com/search/repositories?q="
 
     if keywords != None:
@@ -91,7 +91,7 @@ def fetchRepos(page, headers):
     queryString = queryString + "+language:" + str(language)
 
     queryString = queryString + "&order=desc&page=" + \
-        str(page) + "&per_page=100"
+        str(page) + "&per_page=" + str(reposPerPage)
 
     response = requests.get(queryString, headers=headers)
     JSONresponse = response.json()
@@ -167,9 +167,12 @@ headers = {
 os.makedirs(directory, exist_ok=True)
 
 page = 1
-while True and page <= maxPages:
+countFetchedRepos = 0
+reposPerPage = maxRepos % 100
 
-    fetchedRepos = fetchRepos(page, headers)
+while countFetchedRepos <= maxRepos:
+
+    fetchedRepos = fetchRepos(page, reposPerPage, headers)
 
     if fetchedRepos == None:
         break
