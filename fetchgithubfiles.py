@@ -68,9 +68,9 @@ if args.Keywords != None:
 # FUNCTIONS
 
 def checkAPIRateExceeded(JSONresponse):
-    if "message" in JSONresponse:
-        return "API rate limit exceeded" in JSONresponse["message"]
-    return False
+    if "message" in JSONresponse and "API rate limit exceeded" in JSONresponse["message"]:
+        print("API Rate Exceeded")
+        sys.exit()
 
 
 def printJSONLog(log):
@@ -97,9 +97,7 @@ def fetchRepos(page, reposPerPage, headers):
     JSONresponse = response.json()
 
     if not ("items" in JSONresponse):
-        if checkAPIRateExceeded(JSONresponse):
-            print("API Rate Exceeded")
-            sys.exit()
+        checkAPIRateExceeded(JSONresponse)
         printJSONLog(JSONresponse)
         return None
 
@@ -114,9 +112,7 @@ def fetchRepoFiles(repoFullName, headers):
     JSONresponse = request.json()
 
     if not ("items" in JSONresponse):
-        if checkAPIRateExceeded(JSONresponse):
-            print("API Rate Exceeded")
-            sys.exit()
+        checkAPIRateExceeded(JSONresponse)
         printJSONLog(JSONresponse)
         return None
 
@@ -131,11 +127,7 @@ def fetchSingleFile(repoFullName, fileName, filePath, headers):
     JSONresponse = request.json()
 
     if not ("content" in JSONresponse):
-        if checkAPIRateExceeded(JSONresponse):
-            print("API Rate Exceeded")
-            sys.exit()
-        printJSONLog(JSONresponse)
-        return None
+        checkAPIRateExceeded(JSONresponse)
 
     print("\t\tFetched file " + str(fileName) + " ... ", end="")
     return JSONresponse["content"]
