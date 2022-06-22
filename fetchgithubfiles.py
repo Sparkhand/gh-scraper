@@ -11,7 +11,7 @@ import argparse
 
 language = ""
 fileExtension = ""
-apiToken = ""
+apiToken = None
 maxRepos = 100
 directory = "./fetchedfiles"
 topic = None
@@ -28,9 +28,9 @@ parser.add_argument(
     "Language", help="Set the programming language you want to search for")
 parser.add_argument(
     "FileExtension", help="Set the extension (without .) you want to search for")
-parser.add_argument("ApiToken", help="Set your GitHub API token")
 
 # Options
+parser.add_argument("-apitoken", "--ApiToken", help="Set your GitHub API token")
 parser.add_argument("-mr", "--MaxRepos",
                     help="Set max number of repos pages to be fetched")
 parser.add_argument("-d", "--Directory",
@@ -66,6 +66,20 @@ if args.Keywords != None:
 #####################################################################
 
 # FUNCTIONS
+
+def getAPIToken():
+    global apiToken
+
+    if apiToken != None:
+        return
+    
+    if "GHScraperAPIToken" in os.environ:
+        apiToken = str(os.environ["GHScraperAPIToken"])
+        return
+
+    print("Error! API token not provided neither via option nor via environment variable")
+    sys.exit()  
+
 
 def checkAPIRateExceeded(JSONresponse):
     if "message" in JSONresponse and "API rate limit exceeded" in JSONresponse["message"]:
@@ -149,6 +163,7 @@ def downloadSingleFile(repoName, fileName, fileContent):
 
 # MAIN
 
+getAPIToken()
 
 headers = {
     'Accept': 'application/vnd.github.preview.text-match+json',
