@@ -32,5 +32,5 @@ In order for the script to work you'll have to provide a GitHub Personal Access 
 ## Example
 
 ```bash
-python3 fetchgithubfiles.py rust rs 123123123 -mp 20
+python3 fetchgithubfiles.py rust rs -apitoken 123123123 -mp 20
 ```
