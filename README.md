@@ -23,7 +23,7 @@ In order for the script to work you'll have to provide a GitHub Personal Access 
 
 - `-mr maxrepos`, `--MaxRepos=maxrepos` is the maximum number of repos you want to fetch. Set as 100 by default
 
-- `-d dir`, `--Directory=dir` is the directory where fetched files will be saved. Set as `./fetchedfiles` by default
+- `-d dir`, `--Directory=dir` is the directory where fetched files will be saved. Set as `./fetchedfiles` by default. Directory should be specified in Linux style (`./this/is/an/example`) even if you are from Windows
 
 - `-t topic`, `--Topic=topic` is the single topic for which repositories will be additionally filtered for. By default it has no value, meaning this filter won't be applied
 

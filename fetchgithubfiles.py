@@ -1,11 +1,10 @@
-from ast import keyword
-from httplib2 import Authentication
 import requests
 import sys
 import base64
 import json
 import os
 import argparse
+from pathlib import Path
 
 # GLOBAL VARIABLES
 
@@ -13,7 +12,7 @@ language = ""
 fileExtension = ""
 apiToken = None
 maxRepos = 100
-directory = "./fetchedfiles"
+directory = Path("./fetchedfiles")
 topic = None
 keywords = None
 
@@ -54,7 +53,7 @@ if args.FileExtension != None:
     fileExtension = (args.FileExtension).lower()
 
 if args.Directory != None:
-    directory = args.Directory
+    directory = Path(args.Directory)
 
 if args.Topic != None:
     topic = (args.Topic).lower()
@@ -153,7 +152,7 @@ def decodeFileContent(fileContent):
 
 def downloadSingleFile(repoName, fileName, fileContent):
     print("Downloading ... ", end="")
-    with open(str(directory) + "/" + str(repoName) + "_" + str(fileName), "w") as o:
+    with open(directory / (str(repoName) + "_" + str(fileName)), "w") as o:
         o.write(fileContent)
         o.close()
     print("Done!")
